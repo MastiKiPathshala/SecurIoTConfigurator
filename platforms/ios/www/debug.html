@@ -1,0 +1,36 @@
+<!-- Page, data-page contains page name-->
+<div data-page="debug" class="page">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" onclick="mainView.router.back()" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+            </div>
+            <div class="center">Debug</div>
+        </div>
+    </div>
+    <!-- Scrollable page content-->
+    <div class="page-content">
+        <div class="content-block">
+            <div class="card facebook-card">
+                <div class="card-header no-border">
+                </div>
+                <div class="card-content">
+                    <img src="img/usb_conn.png" width="100%" class="">
+                </div>
+                <div class="card-footer no-border">
+                    <h4><center>Connect USB and Enable USB Tethering</center></h4>
+                </div>
+            </div>
+        </div>
+        <div class="content-block">
+            <p class="buttons-row">
+                <a href="javascript:void(0)" onclick="checkUsb()" class="button active">Check</a>
+                <a href="javascript:void(0)" onclick="reBootUsb()" class="button button-fill color-orange">Reboot</a>
+                <a href="javascript:void(0)" onclick="goBack()" class="button button-fill color-gray">Close</a>
+            </p>
+        </div>
+        <div class="content-block">
+            <div class="resizable" width="100%" id="servResp"></div>
+        </div>
+    </div>
+</div>

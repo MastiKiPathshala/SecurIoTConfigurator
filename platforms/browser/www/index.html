@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="cordova.js"></script>
+    <meta name="theme-color" content="#2196f3">
+    <title>Prophecy Wifigurator</title>
+    <link rel="stylesheet" href="css/framework7.material.css">
+    <link rel="stylesheet" href="css/framework7.material.colors.css">
+    <link rel="css/font_css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/kitchen-sink.css">
+    <link rel="css/whirly.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="img/icon.png">
+    <link href="css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <!--   <link rel="stylesheet" href="css/bootstrap.min.css">  -->
+
+    <style>
+ 
+    body{
+        
+         font-size: 1rem;
+    } 
+    @media (min-width:600px)  {
+            
+            body  {
+                    font-size: 1.5rem;
+                }
+    }
+
+    .customNav{
+       list-style-type: disc;
+    }
+    </style> 
+
+
+    <script type="text/javascript">
+    window.onload = function() {
+        document.addEventListener("deviceready", init, false);
+    }
+
+    function init() {
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        document.addEventListener("resume", onResume, false);
+        callHomeTimer()
+        myApp.init();
+    }
+    var backPopup = false
+
+    function onBackKeyDown() {
+
+        if (!backPopup) {
+
+            myApp.confirm('Do you want really to exit?',
+                function() {
+                    navigator.app.exitApp();
+                    backPopup = false
+                },
+                function() {
+                    backPopup = false
+                })
+        }
+
+        backPopup = true
+
+    }
+
+    function onResume() {
+        setTimeout(function() {
+            console.log('App resumed');
+        }, 0);
+    }
+    </script>
+</head>
+
+<body>
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+    <div class="panel panel-left panel-cover">
+        <div class="view navbar-fixed">
+            <div class="pages">
+            </div>
+        </div>
+    </div>
+    <!-- Views -->
+    <div class="views">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <div class="toolbar">
+                <div class="toolbar-inner" id="modeSelector">
+                    <div id="homeScreenCounterHolder" class="right"></div>
+                    <a onclick="selectMode()" class="link">Mode: <span id='modeId'></span></a>
+                    <a onclick="getLogHistory()" id="histBtn" class="link">History</a>
+                </div>
+            </div>
+            <div class="pages navbar-fixed">
+                <!-- Page, "data-page" contains page name -->
+                <div data-page="index" class="page">
+                    <div class="page-content login-screen-content">
+                        <br>
+                        <center><img src="img/prophecy-logo.png" class=""></center>
+                        <br>
+                        <div class="login-screen-title">Wifigurator</div>
+                        <form id="lgnfrm" name="lgnfrm">
+                            <div class="content-block" align="center">
+                                <img src="img/gateway.png" style="height:150px">
+                            </div>
+
+                            <div class="content-block" align="center">
+                                Power on the Prophecy Datahub, wait for 3 mins and click Start
+                                
+                                <br><small id="startNote1">Note: If you are configuring ethernet, Do not plug in the cable now</small>
+                                <br><small id="startNote2">Plugin the ethernet cable from the desktop to the data hub. Enable "Obtain an IP automatically" in your network settings</small>
+
+                                <br>
+                                <a href="javascript:startWifigurator();" id="loginBtn" class="button button-fill button-raised">START</a>
+                            </div>
+                            <div class="content-block">
+                                <div class="list-block-label">Prophecy Sensorlytics</div>
+                                <div class="list-block-label">Version <span id="verId"> </span></div>
+                            </div>
+                            <p>&nbsp;</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup-interface" id="intrface" style="z-index:999999">
+        <div class="content-block">
+            <div class="content-block-title">
+                <h4>Choose data hub connection type</h4></div>
+            <div style="padding:0; margin-right:-15px; width:auto" class="content-block-inner">
+                <div style="margin:0" class="list-block">
+                    <ul id="intrfaceLst" style="border-top:none">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup-hidNetwork" id="hidnetWork" style="z-index:999999">
+        <div class="content-block">
+            <div class="content-block-title">Add Hidden Network </div>
+            <div style="padding:0; margin-right:-15px; width:auto" class="content-block-inner">
+                <div style="margin:0" class="list-block">
+                    <ul style="border-top:none">
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-input">
+                                        <input type="text" required name="ssid" id="ssid" placeholder="Enter SSID">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-input">
+                                        <p class="buttons-row">
+                                            <a href="#" onclick="appendHidden()" class="button active">Add Network</a>
+                                            <a href="#" onclick="myApp.closeModal();popupFlg=false;" class="button">Cancel</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/framework7.js"></script>
+    <script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/mobile-detect.js"></script>
+    <!--<script type="text/javascript" src="js/gauge.min.js"></script> -->
+
+
+    <script src="js/timer.jquery.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+</body>
+
+</html>

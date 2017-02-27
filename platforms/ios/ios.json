@@ -1,0 +1,135 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"WifiWizard\"><param name=\"ios-package\" value=\"NXWWifiWizard\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Diagnostic\"><param name=\"ios-package\" value=\"Diagnostic\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "NSLocationAlwaysUsageDescription": [
+                        {
+                            "xml": "<string>This app requires constant access to your location in order to track your position, even when the screen is off.</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSLocationWhenInUseUsageDescription": [
+                        {
+                            "xml": "<string>This app will now only track your location when the screen is on and the app is displayed.</string>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.pylonproducts.wifiwizard": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        },
+        "cordova-plugin-android-permissions": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        },
+        "cordova-plugin-hotspot": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.prophecy.hubInit"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "id": "com.pylonproducts.wifiwizard.WifiWizard",
+            "file": "plugins/com.pylonproducts.wifiwizard/www/WifiWizard.js",
+            "pluginId": "com.pylonproducts.wifiwizard",
+            "clobbers": [
+                "window.WifiWizard"
+            ]
+        },
+        {
+            "id": "cordova-plugin-console.console",
+            "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
+            "pluginId": "cordova-plugin-console",
+            "clobbers": [
+                "console"
+            ]
+        },
+        {
+            "id": "cordova-plugin-console.logger",
+            "file": "plugins/cordova-plugin-console/www/logger.js",
+            "pluginId": "cordova-plugin-console",
+            "clobbers": [
+                "cordova.logger"
+            ]
+        },
+        {
+            "id": "cordova-plugin-device.device",
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "pluginId": "cordova-plugin-device",
+            "clobbers": [
+                "device"
+            ]
+        },
+        {
+            "id": "cordova-plugin-hotspot.HotSpotPlugin",
+            "file": "plugins/cordova-plugin-hotspot/www/HotSpotPlugin.js",
+            "pluginId": "cordova-plugin-hotspot",
+            "clobbers": [
+                "cordova.plugins.hotspot"
+            ]
+        },
+        {
+            "id": "cordova.plugins.diagnostic.Diagnostic",
+            "file": "plugins/cordova.plugins.diagnostic/www/ios/diagnostic.js",
+            "pluginId": "cordova.plugins.diagnostic",
+            "clobbers": [
+                "cordova.plugins.diagnostic"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "com.pylonproducts.wifiwizard": "0.2.11",
+        "cordova-plugin-android-permissions": "0.10.0",
+        "cordova-plugin-compat": "1.0.0",
+        "cordova-plugin-console": "1.0.3",
+        "cordova-plugin-device": "1.1.4",
+        "cordova-plugin-hotspot": "1.2.5",
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova.plugins.diagnostic": "3.1.0"
+    }
+}

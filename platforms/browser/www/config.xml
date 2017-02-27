@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="1037007" id="com.prophecy.hubInit" version="1.0.3.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Device">
+        <param name="browser-package" value="Device" />
+    </feature>
+    <name>Prophecy Wifigurator</name>
+    <description>
+       Configures the wifi of the datahub
+    </description>
+    <author email="asarkar@prophecysensorlytics.com" href="http://cordova.io">
+        Prophecy Sensorlytics
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <access origin="http://*" />
+    <access origin="https://*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <icon src="www/logo.png" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="fullscreen" value="false" />
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
+    <preference name="android-minSdkVersion" value="14" />
+</widget>

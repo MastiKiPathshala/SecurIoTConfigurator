@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Prophecy Wifigurator</title>
+    <!-- Path to Framework7 Library CSS-->
+    <script src="cordova.js"></script>
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+    <style>
+  
+    .customNav{
+       list-style-type: disc;
+    }
+
+    body
+    {
+        
+         font-size: 1rem;
+    } 
+    @media (min-width:600px)  {
+            
+            body{
+                    font-size: 1.5rem;
+                }
+    }
+    .label-switch .checkbox:before {
+        background: whitesmoke;
+    }
+    
+    .label-switch .checkbox:after {
+        background: #2196F3;
+    }
+    
+    .label-switch .checkbox {
+        background: #efeff4;
+    }
+    
+    .label-switch input[type=checkbox]:checked+.checkbox {
+        background: whitesmoke !important;
+    }
+    
+    body.keyboardopen {
+        margin-top: -@keyboardheight;
+    }
+    
+    .round-button {
+        width: 25%;
+    }
+    
+    .footnote {
+        background-color: black;
+        color: white;
+        text-align: center;
+        margin-top: 90%;
+    }
+    
+    .round-button-circle {
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        border-radius: 50%;
+        border: 10px solid #cfdcec;
+        overflow: hidden;
+        background: #286ef5;
+        box-shadow: 0 0 3px gray;
+    }
+    
+    .round-button-circle:hover {
+        background: #30588e;
+    }
+    
+    .round-button a {
+        display: block;
+        float: left;
+        width: 100%;
+        padding-top: 50%;
+        padding-bottom: 50%;
+        line-height: 1em;
+        margin-top: -0.5em;
+        text-align: center;
+        color: #e2eaf3;
+        font-family: Verdana;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+
+        document.addEventListener("deviceready", init, false);
+    }
+
+    function init() {
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        document.addEventListener('resume', onResume, false);
+        document.addEventListener('showkeyboard', onKeyboardShow, false);
+
+
+
+        //if androidn 6 checking all permissions
+        if (device.platform == "Android" && (parseInt(device.version) >= 6)) {
+
+            cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status) {
+                switch (status) {
+                    case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                        console.log("Permission not requested");
+                        reqLoc()
+                        break;
+                    case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                        console.log("Permission granted");
+                        // reqLoc()
+                        break;
+                    case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                        console.log("Permission denied");
+                        reqLoc()
+                        break;
+                    case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                        console.log("Permission permanently denied");
+                        reqLoc()
+                        break;
+                }
+            }, function(error) {
+                console.error(error);
+            });
+
+            function reqLoc() {
+                //checking if permissions are enabled, we need location as wifi wizard doesnt work without it
+                cordova.plugins.diagnostic.requestLocationAuthorization(function(e) {
+                    console.log(e)
+                    window.location.reload()
+                }, function(e) {
+                    alert('Could not get permission, please restart app')
+                });
+
+            }
+
+
+            cordova.plugins.diagnostic.isLocationAvailable(function(available) {
+                if (available) {
+                    console.log('Location is availabe')
+
+                } else {
+
+                    myApp.confirm('Please enable location', function() {
+
+                        try {
+
+                            cordova.plugins.diagnostic.switchToLocationSettings();
+
+                        } catch (e) {
+                            console.log('Coudnt switch to location settings')
+                            if (iOSVersion() >= 8) {
+                                cordova.plugins.diagnostic.switchToSettings()
+                            } else {
+                                myApp.alert("Please allow location from the settings->privacy menu");
+                            }
+ 
+                        }
+                    });
+                }
+
+            })
+
+
+
+        }
+
+
+    }
+    var backPopup = false
+
+    function onBackKeyDown() {
+        myApp.closeModal();
+        var pageName = mainView.activePage.name;
+        if (pageName == 'home') {
+
+            if (!backPopup) {
+
+                 myApp.confirm('Do you want to stop scanning?',
+                    function() {
+                        disconnectAndGoBackIndex();
+                    },
+                    function() {
+                      
+                    })
+
+
+           /*    
+            myApp.confirm('Do you want really to exit?',
+                    function() {
+                        navigator.app.exitApp();
+                        backPopup = false
+                    },
+                    function() {
+                        backPopup = false
+                    })
+
+*/
+            }
+
+            backPopup = true
+        } else if (pageName == "list" || pageName == "ethernet") {
+
+            myApp.confirm('Do you want to disconnect?',
+                function() {
+                    disconnectAndGoBackIndex()
+
+                },
+                function() {
+
+                })
+
+
+
+        } else {
+
+            if (popupFlg) {
+                myApp.closeModal();
+            } else {
+                mainView.router.back();
+            }
+
+        }
+
+    }
+
+    function onResume() {
+        setTimeout(function() {
+            console.log('App resumed');
+        }, 0);
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <!-- Right panel with cover effect-->
+    <!-- Views-->
+    <div class="views">
+        <!-- Your main view, should have "view-main" class-->
+        <div class="view view-main">
+            <!-- Top Navbar-->
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <div id="statsDiv"></div>
+                    <a id="rescanBtn" style="display: none;" onclick="startScan()" class="button button-round button-fill color-orange">Rescan</a>
+                    <!--  <div id="homeScreenCounterHolder"></div> -->
+                    <!--<a href="#" onclick="debugMode()" class="button button-round button-fill color-blue">Debug</a> -->
+                </div>
+            </div>
+            <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-fixed toolbar-through">
+                <!-- Page, data-page contains page name-->
+                <div data-page="home" class="page">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <!-- We have home navbar without left link-->
+                            <div class="left"><a onclick="gotoIndex()" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+                            <div class="right">Prophecy Wifigurator</div>
+                            <span id="verId"> </span>
+                        </div>
+                    </div>
+                    <!-- Scrollable page content-->
+                    <div class="page-content">
+                        <div class="content-block-title">
+                        </div>
+                        <div class="content-block">
+                            <div class="content-block-inner">
+                                <center> <img src="img/preloader.gif" style="width:128px;height:128px;padding-bottom:10px">
+                                    <br> Scanning for data hub
+                                    <br> Select the right data hub to begin
+                                    <!--<a href="javascript:void(0)" id="hostBtn" class="button">HOST</a> </center> -->
+                                    <br>
+                            </div>
+                        </div>
+                        <div class="list-block">
+                            <ul id="rasbList">
+                            </ul>
+                        </div>
+                        <!--  <div id="statsDiv"  class="footnote"></div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+        </div>
+    </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/mobile-detect.js"></script>
+    <script type="text/javascript" src="js/fastclick.js"></script>
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/timer.jquery.min.js"></script>
+     <script src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script>
+    $(function() {
+        FastClick.attach(document.body);
+    });
+    </script>
+    <div class="popup popup-hidNetwork" id="hidnetWork" style="z-index:999999">
+        <div class="content-block">
+            <div class="content-block-title">Add Hidden Network </div>
+            <div style="padding:0; margin-right:-15px; width:auto" class="content-block-inner">
+                <div style="margin:0" class="list-block">
+                    <ul style="border-top:none">
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-input">
+                                        <input type="text" required name="ssid" id="ssid" placeholder="Enter SSID">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-input">
+                                        <p class="buttons-row">
+                                            <a href="#" onclick="appendHidden()" class="button active">Add Network</a>
+                                            <a href="#" onclick="myApp.closeModal();popupFlg=false;" class="button">Cancel</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup-interface" id="intrface" style="z-index:999999">
+        <div class="content-block">
+            <div class="content-block-title">
+                <h4>Choose data hub connection type</h4></div>
+            <div style="padding:0; margin-right:-15px; width:auto" class="content-block-inner">
+                <div style="margin:0" class="list-block">
+                    <ul id="intrfaceLst" style="border-top:none">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

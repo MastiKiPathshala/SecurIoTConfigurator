@@ -1,0 +1,62 @@
+<!-- Page, data-page contains page name-->
+<div data-page="staticNetwork" class="page">
+    <div class="navbar">
+        <div class="navbar-inner">
+        <div class="left">
+                <a href="#" onclick="mainView.router.back()" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+            </div>
+            <div class="center sliding">Static Ip</div>
+            
+        </div>
+    </div>
+    <!-- Scrollable page content-->
+    <div class="page-content">
+        <div class="content-block">
+            <div class="list-block">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Address</div>
+                                <div class="item-input">
+                                    <input id="address" type="text" placeholder="static address you wanna set" class="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Netmask</div>
+                                <div class="item-input">
+                                    <input id="netmask" type="text" placeholder="network mask">
+                                </div>
+                            </div>
+                        </div>
+                    </li> 
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Gateway</div>
+                                <div class="item-input">
+                                    <input type="text" id="gateway" placeholder="gateway">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">
+                                    <a onclick="mainView.router.back()" class="button button-fill color-gray">BACK</a></div>
+                                <div class="item-input">
+                                    <a href="javascript:void(0)" onclick="addStaticIp()" class="button active">ADD</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
