@@ -27,7 +27,7 @@ var hostId = '';
 var mode = "MOBILE"
 
 
-var RPIENDPOINT = "http://192.168.42.42"
+var RPIENDPOINT = "http://192.168.42.208"
 
 //var RPIENDPOINT = 'http://10.0.0.1'
 //var protocol = 'http://'
@@ -1695,7 +1695,7 @@ function startWifigurator(element) {
     $("#loginBtn").text('Wait..')
     if (md.os() == 'AndroidOS') {
 
-        if (RPIENDPOINT == "http://192.168.42.42") {
+        if (RPIENDPOINT == "http://192.168.42.208") {
 
             callHostIp(function(data) {
 
@@ -1739,7 +1739,7 @@ function startWifigurator(element) {
 
     } else {
 
-        if (RPIENDPOINT == "http://192.168.42.42") {
+        if (RPIENDPOINT == "http://192.168.42.208") {
 
             callHostIp(function(data) {
                 if (data.success) {
@@ -1879,7 +1879,7 @@ function selectMode() {
 
                 } else {
 
-                    setRpiEndoint('http://192.168.42.42')
+                    setRpiEndoint('http://192.168.42.208')
 
                     checkIfUsbConnected(function(yes) {
 
@@ -1923,7 +1923,7 @@ function setRpiEndoint(url) {
 
 function getRpiEndpoint() {
 
-    RPIENDPOINT = window.localStorage.getItem('RPIURL') || 'http://192.168.42.42'
+    RPIENDPOINT = window.localStorage.getItem('RPIURL') || 'http://192.168.42.208'
 
 
     if (mode == "DESKTOP") {
