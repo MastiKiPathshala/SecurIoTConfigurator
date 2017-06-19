@@ -113,28 +113,28 @@
     },
     "installed_plugins": {
         "com.pylonproducts.wifiwizard": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         },
         "cordova-plugin-android-permissions": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         },
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         },
         "cordova-plugin-hotspot": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         },
         "cordova.plugins.diagnostic": {
-            "PACKAGE_NAME": "com.zreyas.configurator"
+            "PACKAGE_NAME": "com.mkp.configurator"
         }
     },
     "dependent_plugins": {},

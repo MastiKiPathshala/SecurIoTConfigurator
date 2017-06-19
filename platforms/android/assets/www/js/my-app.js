@@ -3,7 +3,7 @@ var page = path.split("/").pop();
 
 var material = (page == "index.html") ? true : false;
 var myApp = new Framework7({
-    modalTitle: 'Wifigurator',
+    modalTitle: 'SecurIOT Configurator',
     // Enable Material theme
     material: material
 });
@@ -35,7 +35,7 @@ var RPIENDPOINT = "http://192.168.42.208"
 var protocol = 'https://'
 var port = ':8080'
 
-var APP_VERSION = '1.0.4.4';
+var APP_VERSION = '0.1';
 var APP_RELEASE = "V";
 var ENDPOINT = ""
 
@@ -486,7 +486,7 @@ function getRasphList() {
         if (isConnected) {
 
             $.ajax({
-                url: RPIENDPOINT,
+                url: RPIENDPOINT + "/api/system/v1.0",
                 type: "POST",
                 data: JSON.stringify({ action: 'SCAN', iface: selectedInterface })
             }).done(function(res) {
@@ -552,7 +552,7 @@ function callHostIp(cb) {
 
 
     $.ajax({
-        url: RPIENDPOINT,
+        url: RPIENDPOINT + "/api/system/v1.0",
         type: "POST",
         data: JSON.stringify({ action: 'STATUS' }),
         timeout: 60000
@@ -856,7 +856,7 @@ function sendToServer(bypass) {
                 console.log(isConnected);
 
                 $.ajax({
-                    url: RPIENDPOINT,
+                    url: RPIENDPOINT + "/api/system/v1.0",
                     type: "POST",
                     data: JSON.stringify({ action: 'ADD', data: inputData, iface: selectedInterface })
 
@@ -1182,7 +1182,7 @@ function debugMode() {
 function checkUsb() {
 
     $.ajax({
-        url: RPIENDPOINT,
+        url: RPIENDPOINT + "/api/system/v1.0",
         type: "POST",
         data: JSON.stringify({ action: 'CURRENT' })
 
@@ -1200,7 +1200,7 @@ function checkUsb() {
 function reBootUsb() {
 
     $.ajax({
-        url: RPIENDPOINT,
+        url: RPIENDPOINT + "/api/system/v1.0",
         type: "POST",
         data: JSON.stringify({ action: 'REBOOT' })
 
@@ -1249,7 +1249,7 @@ function addStaticIp(cb) {
 
         console.log(postdata);
         $.ajax({
-            url: RPIENDPOINT,
+            url: RPIENDPOINT + "/api/system/v1.0",
             type: "POST",
             data: JSON.stringify({ action: 'STATIC', data: postdata, iface: selectedInterface })
         }).done(function(res) {
